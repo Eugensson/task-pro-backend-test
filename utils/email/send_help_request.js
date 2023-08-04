@@ -5,7 +5,7 @@ const sendHelpRequest = async (req, res) => {
 
   try {
     const mailOptions = {
-      from: 'task-board@meta.ua',
+      from: 'eco2023@meta.ua',
       to: 'taskpro.project@gmail.com',
       subject: 'Help Request',
       text: `Email: ${email}\nComment: ${comment}`,
