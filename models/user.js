@@ -8,8 +8,8 @@ const { handleMongooseError } = require('../helpers');
 
 const emailRegexp =
   /^(?=.*[@.])[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*$/;
-const passRegexp =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
+// const passRegexp =
+//   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
 
 // const themeList = ['Light', 'Dark', 'Violet'];
 // const iconList = [
@@ -38,7 +38,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      match: passRegexp,
+      // match: passRegexp,
       required: [true, 'Set password for user'],
     },
     avatarURL: { type: String, default: '' },
@@ -61,16 +61,16 @@ userSchema.post('save', handleMongooseError);
 const registerSchema = joi.object({
   name: joi.string().min(2).max(32).required(),
   email: joi.string().pattern(emailRegexp).required(),
-  password: joi.string().pattern(passRegexp).required(),
+  // password: joi.string().pattern(passRegexp).required(),
   // email: joi.string().required(),
-  // password: joi.string().required(),
+  password: joi.string().required(),
 });
 
 const loginSchema = joi.object({
   email: joi.string().pattern(emailRegexp).required(),
-  password: joi.string().pattern(passRegexp).required(),
+  // password: joi.string().pattern(passRegexp).required(),
   // email: joi.string().required(),
-  // password: joi.string().required(),
+  password: joi.string().required(),
 });
 
 //
