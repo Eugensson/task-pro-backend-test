@@ -5,6 +5,12 @@ const { handleMongooseError } = require('../helpers');
 // const emailRegexp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 // const passRegexp =
 //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
+
+const emailRegexp =
+  /^(?=.*[@.])[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*$/;
+const passRegexp =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
+
 // const themeList = ['Light', 'Dark', 'Violet'];
 // const iconList = [
 //   'project',
@@ -26,13 +32,13 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      // match: emailRegexp,
+      match: emailRegexp,
       required: [true, 'Email is required'],
       unique: true,
     },
     password: {
       type: String,
-      // match: passRegexp,
+      match: passRegexp,
       required: [true, 'Set password for user'],
     },
     avatarURL: { type: String, default: '' },
@@ -54,17 +60,17 @@ userSchema.post('save', handleMongooseError);
 
 const registerSchema = joi.object({
   name: joi.string().min(2).max(32).required(),
-  // email: joi.string().pattern(emailRegexp).required(),
-  // password: joi.string().pattern(passRegexp).required(),
-  email: joi.string().required(),
-  password: joi.string().required(),
+  email: joi.string().pattern(emailRegexp).required(),
+  password: joi.string().pattern(passRegexp).required(),
+  // email: joi.string().required(),
+  // password: joi.string().required(),
 });
 
 const loginSchema = joi.object({
-  // email: joi.string().pattern(emailRegexp).required(),
-  // password: joi.string().pattern(passRegexp).required(),
-  email: joi.string().required(),
-  password: joi.string().required(),
+  email: joi.string().pattern(emailRegexp).required(),
+  password: joi.string().pattern(passRegexp).required(),
+  // email: joi.string().required(),
+  // password: joi.string().required(),
 });
 
 //
