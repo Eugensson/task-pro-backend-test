@@ -7,6 +7,7 @@ const authRouter = require('./routes/api/auth');
 const usersRouter = require('./routes/api/users');
 const boardsRouter = require('./routes/api/boards');
 const emailRouter = require('./routes/api/email');
+const swaggerRouter = require('./routes/api/swagger')
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/boards', boardsRouter);
 app.use('/api/email', emailRouter);
+app.use('/api/swagger', swaggerRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
