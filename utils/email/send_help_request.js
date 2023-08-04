@@ -1,6 +1,12 @@
 const { transport } = require('../../helpers');
+const { sendHelpRequestSchema } = require("../../models/validationSchemas");
+const { HttpError } = require('../../helpers');
 
 const sendHelpRequest = async (req, res) => {
+  const { error } = sendHelpRequestSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ error: HttpError(400) });
+  }
   const { email, comment } = req.body;
 
   try {
