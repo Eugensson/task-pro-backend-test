@@ -4,10 +4,9 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRouter = require('./routes/api/auth');
-const usersRouter = require('./routes/api/users');
 const boardsRouter = require('./routes/api/boards');
 const emailRouter = require('./routes/api/email');
-const swaggerRouter = require('./routes/api/swagger')
+const swaggerRouter = require('./routes/api/swagger');
 
 const app = express();
 
@@ -18,8 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/users', authRouter);
 app.use('/api/boards', boardsRouter);
 app.use('/api/email', emailRouter);
 app.use('/api/swagger', swaggerRouter);

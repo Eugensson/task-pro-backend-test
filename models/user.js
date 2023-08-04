@@ -11,7 +11,6 @@ const emailRegexp =
 // const passRegexp =
 //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
 
-// const themeList = ['Light', 'Dark', 'Violet'];
 // const iconList = [
 //   'project',
 //   'star',
@@ -26,7 +25,7 @@ const emailRegexp =
 
 const userSchema = new Schema(
   {
-    name: {
+    username: {
       type: String,
       required: [true, 'Username is required'],
     },
@@ -44,8 +43,8 @@ const userSchema = new Schema(
     avatarURL: { type: String, default: '' },
     theme: {
       type: String,
-      // enum: themeList,
-      default: 'light',
+      enum: ['LIGHT', 'DARK', 'VIOLET'],
+      default: 'LIGHT',
     },
     boards: { type: Array, default: [] },
     token: {
@@ -58,19 +57,13 @@ const userSchema = new Schema(
 
 userSchema.post('save', handleMongooseError);
 
-const registerSchema = joi.object({
-  name: joi.string().min(2).max(32).required(),
-  email: joi.string().pattern(emailRegexp).required(),
-  // password: joi.string().pattern(passRegexp).required(),
-  // email: joi.string().required(),
+const userSchemaJoi = joi.object({
+  username: joi.string().min(2).max(32),
   password: joi.string().required(),
-});
-
-const loginSchema = joi.object({
-  email: joi.string().pattern(emailRegexp).required(),
-  // password: joi.string().pattern(passRegexp).required(),
-  // email: joi.string().required(),
-  password: joi.string().required(),
+  email: joi.string().required(),
+  avatarURL: joi.string(),
+  token: joi.string().token().default(''),
+  theme: joi.string().valid('DARK', 'LIGHT', 'VIOLET').default('LIGHT'),
 });
 
 //
@@ -138,24 +131,14 @@ const boardSchema = joi.object({
     .required(),
 });
 
-const updateThemeSchema = joi.object({
-  theme: joi.string(),
-});
-
-const updateUserSchema = joi.object({
-  name: joi.string().min(2).max(32),
-  email: joi.string(),
-  password: joi.string(),
-});
-
-const schemas = {
-  registerSchema,
-  loginSchema,
-  boardSchema,
-  updateThemeSchema,
-  updateUserSchema,
-};
+// const schemas = {
+//   registerSchema,
+//   loginSchema,
+//   boardSchema,
+//   updateThemeSchema,
+//   updateUserSchema,
+// };
 
 const User = model('user', userSchema);
 
-module.exports = { User, schemas };
+module.exports = { User, userSchemaJoi, boardSchema };

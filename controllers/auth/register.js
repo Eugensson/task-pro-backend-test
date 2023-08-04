@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 
 const { User } = require('../../models/user');
 
-const { HttpError, ctrlWrapper } = require('../../helpers');
+const { HttpError, ctrlWrapper, jwtGenerator } = require('../../helpers');
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -15,15 +15,19 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
+  const JWT = jwtGenerator({ email: email });
+
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
+    token: JWT,
   });
 
   res.status(201).json({
     user: {
-      name: newUser.name,
+      username: newUser.username,
       email: newUser.email,
+      token: JWT,
     },
   });
 };

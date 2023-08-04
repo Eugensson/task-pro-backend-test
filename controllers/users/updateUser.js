@@ -1,21 +1,47 @@
-const { User } = require('../../models/user');
-const { ctrlWrapper } = require('../../helpers');
+const { errorHandler, ctrlWrapper } = require('../../helpers');
+const { User } = require('../../models');
+const bcrypt = require('bcrypt');
 
 const updateUser = async (req, res) => {
-  const { name, email, password } = req.body;
   const { _id } = req.user;
 
-  await User.findByIdAndUpdate(_id, {
-    name,
-    email,
-    password,
+  if (!_id) {
+    throw errorHandler(403);
+  }
+  const user = await User.findById(_id);
+
+  if (!user) {
+    throw errorHandler(400);
+  }
+
+  const fieldToUpdate = Object.keys(user._doc).map(item => {
+    if (Object.keys(req.body).includes(item)) {
+      return item;
+    }
+
+    return item;
   });
 
-  res.status(200).json({
-    message: 'User info was changed',
-  });
+  const updatedUser = user;
+
+  for (const field of fieldToUpdate) {
+    if (field !== undefined) updatedUser[field] = req.body[field];
+    if (field === 'password') {
+      const hashedPassword = bcrypt.hashSync(req.body[field], 10);
+      updatedUser[field] = hashedPassword;
+    }
+  }
+
+  delete updatedUser._doc._id;
+  delete updatedUser._doc.__v;
+
+  const newUser = await User.findByIdAndUpdate(
+    _id,
+    { ...updatedUser },
+    { new: true }
+  );
+
+  res.status(200).json({ data: newUser });
 };
 
-module.exports = {
-  updateUser: ctrlWrapper(updateUser),
-};
+module.exports = { updateUser: ctrlWrapper(updateUser) };
