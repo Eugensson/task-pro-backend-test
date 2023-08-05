@@ -15,11 +15,14 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const JWT = jwtGenerator({ email: email });
-
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
+  });
+
+  const JWT = jwtGenerator({ id: newUser._id });
+  
+  await User.findByIdAndUpdate(newUser._id, {
     token: JWT,
   });
 

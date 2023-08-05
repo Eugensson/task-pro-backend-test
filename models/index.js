@@ -1,4 +1,17 @@
-const { User, userSchemaJoi, boardSchema } = require('./user');
+const {
+  User,
+  userSchemaJoi,
+  boardSchema,
+  updateUserSchema,
+  updateThemeSchema
+} = require('./user');
 const { sendHelpRequestSchema } = require('./validationSchemas');
 
-module.exports = { User, userSchemaJoi, boardSchema, sendHelpRequestSchema };
+module.exports = {
+  User,
+  userSchemaJoi,
+  boardSchema,
+  sendHelpRequestSchema,
+  updateUserSchema,
+  updateThemeSchema,
+};

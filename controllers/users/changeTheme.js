@@ -4,16 +4,21 @@ const { HttpError, ctrlWrapper } = require('../../helpers');
 const changeTheme = async (req, res) => {
   const { _id } = req.user;
 
-  const validTheme = ['light', 'dark', 'violet'].includes(req.body.theme);
+  const { theme } = req.body;
+  console.log(theme);
 
-  if (!validTheme) {
-    throw HttpError(400, 'Theme does not exist');
+  const user = await User.findByIdAndUpdate(
+    _id,
+    { theme: req.body.theme },
+    { new: true }
+  );
+
+  if (!user) {
+    throw HttpError(400);
   }
-
-  await User.findByIdAndUpdate(_id, { theme: req.body.theme });
-
+  
   res.status(200).json({
-    message: 'Theme was changed',
+    theme: user.theme,
   });
 };
 

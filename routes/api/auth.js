@@ -2,7 +2,11 @@ const express = require('express');
 
 const { validateBody, authenticate, upload } = require('../../middlewares');
 
-const { userSchemaJoi } = require('../../models/user');
+const {
+  userSchemaJoi,
+  updateUserSchema,
+  updateThemeSchema,
+} = require('../../models/user');
 
 const {
   getCurrent,
@@ -27,9 +31,14 @@ router.post('/logout', authenticate, logout);
 
 router.get('/current', authenticate, getCurrent);
 
-router.patch('/theme', authenticate, validateBody(userSchemaJoi), changeTheme);
+router.patch(
+  '/theme',
+  authenticate,
+  validateBody(updateThemeSchema),
+  changeTheme
+);
 
-router.patch('/data', authenticate, validateBody(userSchemaJoi), updateUser);
+router.patch('/data', authenticate, validateBody(updateUserSchema), updateUser);
 
 router.patch('/avatars', authenticate, upload.single('avatar'), updateAvatar);
 

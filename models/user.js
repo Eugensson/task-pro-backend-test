@@ -66,7 +66,16 @@ const userSchemaJoi = joi.object({
   theme: joi.string().valid('DARK', 'LIGHT', 'VIOLET').default('LIGHT'),
 });
 
-//
+const updateThemeSchema = joi.object({
+  theme: joi.string().valid('DARK', 'LIGHT', 'VIOLET').required(),
+});
+
+const updateUserSchema = joi.object({
+  username: joi.string().min(2).max(32),
+  password: joi.string(),
+  email: joi.string(),
+  avatarURL: joi.string(),
+});
 
 // const board = {
 //   id: '',
@@ -141,4 +150,10 @@ const boardSchema = joi.object({
 
 const User = model('user', userSchema);
 
-module.exports = { User, userSchemaJoi, boardSchema };
+module.exports = {
+  User,
+  userSchemaJoi,
+  boardSchema,
+  updateThemeSchema,
+  updateUserSchema,
+};
