@@ -19,7 +19,7 @@ const login = async (req, res) => {
   }
 
   const token = jwtGenerator({
-    email: user.email,
+    _id: user._id,
   });
 
   const newUser = await User.findByIdAndUpdate(
