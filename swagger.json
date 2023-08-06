@@ -62,14 +62,13 @@
         "tags": ["Auth"],
         "summary": "User loginization",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Loginization's object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/LoginizationRequest"
               }
             }
           }
@@ -80,7 +79,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/LoginizationResponse"
                 }
               }
             }
@@ -88,17 +87,13 @@
           "400": {
             "description": "Bad request (invalid request body)",
             "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
-            "content": {}
-          }
+          }         
         }
       }
     },"api/users/auth/logout": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "User Logout",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -107,7 +102,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/LogoutRequest"
               }
             }
           }
@@ -118,17 +113,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/LogoutResponse"
                 }
               }
             }
           },
           "400": {
             "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
             "content": {}
           }
         }
@@ -136,7 +127,7 @@
     },"api/users/auth/current": {
       "get": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "Get user info",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -145,7 +136,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/CurrentRequest"
               }
             }
           }
@@ -156,7 +147,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/CurrentResponse"
                 }
               }
             }
@@ -183,7 +174,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/ThemeRequest"
               }
             }
           }
@@ -194,7 +185,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/ThemeResponse"
                 }
               }
             }
@@ -221,7 +212,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/UpdateDataRequest"
               }
             }
           }
@@ -232,7 +223,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/UpdateDataResponse"
                 }
               }
             }
@@ -259,7 +250,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/AvatarsRequest"
               }
             }
           }
@@ -270,7 +261,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/AvatarsResponse"
                 }
               }
             }
@@ -301,6 +292,11 @@
           "password": {
             "type": "string",
             "description": "User's password",
+            "example": "qwerty123"
+          },
+          "username": {
+            "type": "string",
+            "description": "User's username",
             "example": "qwerty123"
           }
         }
@@ -378,6 +374,164 @@
         }
       },
       "AvatarsRequest": {
+        "type": "file",
+        "required":["token", "avatar"],
+        "items": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "format": "token"
+            },
+            "avatar": {
+              "type": "file",
+              "description": "User's avatar"
+            }
+          }
+        }
+        
+      },     "RegistrationResponse": {
+        "type": "object",
+        "required": ["_id","token", "email", "password"],
+        "properties": {
+
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "username": {
+            "type": "string",
+            "description": "User's username",
+            "example": "qwerty123"
+          },  "token": {
+            "type": "string",
+            "description": "User's token"
+          }
+        }
+      },"LoginizationResponse": {
+        "type": "object",
+        "required": ["email", "password", "username", "avatar", "boards", "token"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"username": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"avatar": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"boards": {
+            "type": "object",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"token": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Successful operation",
+            "format": "JWTtoken"
+          }
+        }
+      },
+      "CurrentResponse": {
+      "type": "object",
+        "required": ["email", "password", "username", "avatar", "boards", "token"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"username": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"avatar": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"boards": {
+            "type": "object",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"token": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },"ThemeResponse": {
+        "type": "object",
+        "required": ["theme"],
+        "properties": {
+          "theme": {
+            "type": "string",
+            "description": "User's Responseed theme",
+            "example": "LIGHT"
+          }
+        }
+      },"UpdateDataResponse": {
+        "type": "object",
+        "required": ["email", "password", "username", "avatar", "boards", "token"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"username": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"avatar": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"boards": {
+            "type": "object",
+            "description": "User's password",
+            "example": "qwerty123"
+          },"token": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "AvatarsResponse": {
         "type": "file",
         "required":["token", "avatar"],
         "items": {
