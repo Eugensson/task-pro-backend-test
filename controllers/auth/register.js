@@ -21,16 +21,20 @@ const register = async (req, res) => {
   });
 
   const JWT = jwtGenerator({ id: newUser._id });
-  
-  await User.findByIdAndUpdate(newUser._id, {
-    token: JWT,
-  });
 
+  const newToken = await User.findByIdAndUpdate(
+    newUser._id,
+    {
+      token: JWT,
+    },
+    { new: true }
+  );
+  console.log(JWT === newToken.token);
   res.status(201).json({
     user: {
       username: newUser.username,
       email: newUser.email,
-      token: JWT,
+      token: newToken.token,
     },
   });
 };
