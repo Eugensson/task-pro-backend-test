@@ -134,7 +134,7 @@
         }
       }
     },"api/users/auth/current": {
-      "post": {
+      "get": {
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
@@ -172,7 +172,7 @@
         }
       }
     },"api/users/auth/theme": {
-      "post": {
+      "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
@@ -210,7 +210,7 @@
         }
       }
     },"api/users/auth/data": {
-      "post": {
+      "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
@@ -248,7 +248,7 @@
         }
       }
     },"api/users/auth/avatars": {
-      "post": {
+      "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
