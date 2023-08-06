@@ -22,7 +22,11 @@ const login = async (req, res) => {
     email: user.email,
   });
 
-  const newUser = await User.findByIdAndUpdate(user._id, { token });
+  const newUser = await User.findByIdAndUpdate(
+    user._id,
+    { token },
+    { new: true }
+  );
 
   res.status(200).json({
     newUser,
