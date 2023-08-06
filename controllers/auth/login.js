@@ -24,7 +24,10 @@ const login = async (req, res) => {
 
   await User.findByIdAndUpdate(user._id, { token });
 
-  res.status(200).json(user);
+  res.status(200).json({
+    token,
+    user,
+  });
 };
 
 module.exports = { login: ctrlWrapper(login) };
