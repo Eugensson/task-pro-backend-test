@@ -1,6 +1,5 @@
-const { transport } = require('../helpers');
+const { transport, HttpError } = require('../helpers');
 const { sendHelpRequestSchema } = require('../models/validationSchemas');
-const { HttpError } = require('../helpers');
 
 const sendHelpRequest = async (req, res) => {
   const { error } = sendHelpRequestSchema.validate(req.body);
