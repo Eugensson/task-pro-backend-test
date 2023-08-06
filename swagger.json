@@ -377,7 +377,7 @@
           }
         }
       },
-      "AvatarsResponse": {
+      "AvatarsRequest": {
         "type": "file",
         "required":["token", "avatar"],
         "items": {
