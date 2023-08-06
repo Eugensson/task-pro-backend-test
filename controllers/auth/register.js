@@ -29,9 +29,10 @@ const register = async (req, res) => {
     },
     { new: true }
   );
-  console.log(JWT === newToken.token);
+
   res.status(201).json({
     user: {
+      _id: newUser._id,
       username: newUser.username,
       email: newUser.email,
       token: newToken.token,
