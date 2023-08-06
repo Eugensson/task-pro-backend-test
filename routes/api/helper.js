@@ -4,12 +4,12 @@ const { validateBody, authenticate } = require('../../middlewares');
 
 const { sendHelpRequestSchema } = require('../../models/validationSchemas');
 
-const sendHelpRequest = require('../../utils/email/send_help_request');
+const sendHelpRequest = require('../../utils/helper');
 
 const router = express.Router();
 
 router.post(
-  '/helper',
+  '/',
   authenticate,
   validateBody(sendHelpRequestSchema),
   sendHelpRequest

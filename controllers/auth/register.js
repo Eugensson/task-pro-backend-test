@@ -21,13 +21,14 @@ const register = async (req, res) => {
   });
 
   const JWT = jwtGenerator({ id: newUser._id });
-  
+
   await User.findByIdAndUpdate(newUser._id, {
     token: JWT,
   });
 
   res.status(201).json({
     user: {
+      _id: newUser._id,
       username: newUser.username,
       email: newUser.email,
       token: JWT,

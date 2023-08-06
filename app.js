@@ -7,7 +7,7 @@ const swaggerDocument = require('./swagger.json');
 
 const authRouter = require('./routes/api/auth');
 const boardsRouter = require('./routes/api/boards');
-const emailRouter = require('./routes/api/email');
+const helperRouter = require('./routes/api/helper');
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(express.static('public'));
 
 app.use('/api/users', authRouter);
 app.use('/api/boards', boardsRouter);
-app.use('/api/email', emailRouter);
+app.use('/api/helper', helperRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
