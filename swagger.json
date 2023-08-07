@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "2.0.2",
-    "title": "Swagger test",
-    "description": "Showing off swagger-ui-express",
+    "version": "1.0.0",
+    "title": "Tasks-Pro API",
+    "description": "Tasks-Pro API Documentation",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -57,7 +57,8 @@
           }
         }
       }
-    },"api/users/auth/login": {
+    },
+    "api/users/auth/login": {
       "post": {
         "tags": ["Auth"],
         "summary": "User loginization",
@@ -87,10 +88,11 @@
           "400": {
             "description": "Bad request (invalid request body)",
             "content": {}
-          }         
+          }
         }
       }
-    },"api/users/auth/logout": {
+    },
+    "api/users/auth/logout": {
       "post": {
         "tags": ["Auth"],
         "summary": "User Logout",
@@ -124,7 +126,8 @@
           }
         }
       }
-    },"api/users/auth/current": {
+    },
+    "api/users/auth/current": {
       "get": {
         "tags": ["Auth"],
         "summary": "Get user info",
@@ -162,7 +165,8 @@
           }
         }
       }
-    },"api/users/auth/theme": {
+    },
+    "api/users/auth/theme": {
       "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -200,7 +204,8 @@
           }
         }
       }
-    },"api/users/auth/data": {
+    },
+    "api/users/auth/data": {
       "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -238,7 +243,8 @@
           }
         }
       }
-    },"api/users/auth/avatars": {
+    },
+    "api/users/auth/avatars": {
       "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -300,7 +306,8 @@
             "example": "qwerty123"
           }
         }
-      },"LoginizationRequest": {
+      },
+      "LoginizationRequest": {
         "type": "object",
         "required": ["email", "password"],
         "properties": {
@@ -328,7 +335,7 @@
         }
       },
       "CurrentRequest": {
-         "type": "object",
+        "type": "object",
         "required": ["token"],
         "properties": {
           "token": {
@@ -337,7 +344,8 @@
             "format": "JWTtoken"
           }
         }
-      },"ThemeRequest": {
+      },
+      "ThemeRequest": {
         "type": "object",
         "required": ["token", "theme"],
         "properties": {
@@ -352,7 +360,8 @@
             "example": "LIGHT"
           }
         }
-      },"UpdateDataRequest": {
+      },
+      "UpdateDataRequest": {
         "type": "object",
         "required": ["token"],
         "properties": {
@@ -365,8 +374,8 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          }
-          ,"username": {
+          },
+          "username": {
             "type": "string",
             "description": "User's username",
             "example": "qwerty123"
@@ -375,7 +384,7 @@
       },
       "AvatarsRequest": {
         "type": "file",
-        "required":["token", "avatar"],
+        "required": ["token", "avatar"],
         "items": {
           "type": "object",
           "properties": {
@@ -390,12 +399,11 @@
             }
           }
         }
-        
-      },     "RegistrationResponse": {
+      },
+      "RegistrationResponse": {
         "type": "object",
-        "required": ["_id","token", "email", "password"],
+        "required": ["_id", "token", "email", "password"],
         "properties": {
-
           "_id": {
             "type": "string",
             "description": "User's id",
@@ -410,14 +418,23 @@
             "type": "string",
             "description": "User's username",
             "example": "qwerty123"
-          },  "token": {
+          },
+          "token": {
             "type": "string",
             "description": "User's token"
           }
         }
-      },"LoginizationResponse": {
+      },
+      "LoginizationResponse": {
         "type": "object",
-        "required": ["email", "password", "username", "avatar", "boards", "token"],
+        "required": [
+          "email",
+          "password",
+          "username",
+          "avatar",
+          "boards",
+          "token"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -428,19 +445,23 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"username": {
+          },
+          "username": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"avatar": {
+          },
+          "avatar": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"boards": {
+          },
+          "boards": {
             "type": "object",
             "description": "User's password",
             "example": "qwerty123"
-          },"token": {
+          },
+          "token": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
@@ -459,8 +480,15 @@
         }
       },
       "CurrentResponse": {
-      "type": "object",
-        "required": ["email", "password", "username", "avatar", "boards", "token"],
+        "type": "object",
+        "required": [
+          "email",
+          "password",
+          "username",
+          "avatar",
+          "boards",
+          "token"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -471,25 +499,30 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"username": {
+          },
+          "username": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"avatar": {
+          },
+          "avatar": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"boards": {
+          },
+          "boards": {
             "type": "object",
             "description": "User's password",
             "example": "qwerty123"
-          },"token": {
+          },
+          "token": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
           }
         }
-      },"ThemeResponse": {
+      },
+      "ThemeResponse": {
         "type": "object",
         "required": ["theme"],
         "properties": {
@@ -499,9 +532,17 @@
             "example": "LIGHT"
           }
         }
-      },"UpdateDataResponse": {
+      },
+      "UpdateDataResponse": {
         "type": "object",
-        "required": ["email", "password", "username", "avatar", "boards", "token"],
+        "required": [
+          "email",
+          "password",
+          "username",
+          "avatar",
+          "boards",
+          "token"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -512,19 +553,23 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"username": {
+          },
+          "username": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"avatar": {
+          },
+          "avatar": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },"boards": {
+          },
+          "boards": {
             "type": "object",
             "description": "User's password",
             "example": "qwerty123"
-          },"token": {
+          },
+          "token": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
@@ -533,7 +578,7 @@
       },
       "AvatarsResponse": {
         "type": "file",
-        "required":["token", "avatar"],
+        "required": ["token", "avatar"],
         "items": {
           "type": "object",
           "properties": {
@@ -548,7 +593,6 @@
             }
           }
         }
-        
       }
     },
     "securitySchemes": {
