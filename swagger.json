@@ -356,7 +356,7 @@
       "ThemeRequest": {
         "type": "object",
         "required": ["token", "theme"],
-        "tags": [{"name": "User"}],
+        "tags": ["User"],
         "properties": {
           "token": {
             "type": "string",
