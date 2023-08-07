@@ -2,8 +2,9 @@ const cloudinary = require('cloudinary').v2;
 const { ctrlWrapper } = require('../../helpers');
 const { User } = require('../../models/user');
 
-const { CLOUDINARY_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } =
-  process.env;
+const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME;
+const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
+const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 
 cloudinary.config({
   cloud_name: CLOUDINARY_NAME,
@@ -29,8 +30,6 @@ const updateAvatar = async (req, res) => {
 
       uploadStream.end(req.file.buffer);
     });
-
-    console.log(result);
 
     const avatarURL = result.secure_url;
 
