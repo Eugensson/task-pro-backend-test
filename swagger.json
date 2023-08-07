@@ -596,8 +596,8 @@
       }
     },"tags": [
     {
-      "name": "Auth",
-      "description": "Authorization endpoints"
+      "name": "User",
+      "description": "User endpoints"
     }
   ],"components": {
     "schemas": {
