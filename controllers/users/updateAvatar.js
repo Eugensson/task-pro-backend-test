@@ -43,4 +43,4 @@ const updateAvatar = async (req, res) => {
   }
 };
 
-module.exports = ctrlWrapper(updateAvatar);
+module.exports = { updateAvatar: ctrlWrapper(updateAvatar) };
