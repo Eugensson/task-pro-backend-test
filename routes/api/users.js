@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
 
-const { validateBody, authenticate } = require('../../middlewares');
+const { validateBody, authenticate, upload } = require('../../middlewares');
 const { schemas } = require('../../models/user');
 const ctrl = require('../../controllers/auth');
 
@@ -20,9 +19,6 @@ router.patch(
   validateBody(schemas.updateUserSchema),
   ctrl.updateUser
 );
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 router.patch(
   '/avatars',
