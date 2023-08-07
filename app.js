@@ -6,9 +6,9 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 const authRouter = require('./routes/api/auth');
-const helperRouter = require('./routes/api/helper');
-const boardsRouter = require('./routes/api/boards');
 const usersRouter = require('./routes/api/users');
+const boardsRouter = require('./routes/api/boards');
+const helperRouter = require('./routes/api/helper');
 
 const app = express();
 
