@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 const cloudinary = require('cloudinary').v2;
 const { ctrlWrapper } = require('../../helpers');
 const { User } = require('../../models/user');
@@ -16,15 +14,33 @@ cloudinary.config({
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
 
-  const result = await cloudinary.uploader.upload(req.file.path);
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: 'avatars' },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
 
-  const avatarURL = result.secure_url;
+      uploadStream.end(req.file.buffer);
+    });
 
-  User.findByIdAndUpdate(_id, { avatarURL: avatarURL }).then(() => {
-    fs.unlinkSync(req.file.path);
+    console.log(result);
+
+    const avatarURL = result.secure_url;
+
+    await User.findByIdAndUpdate(_id, { avatarURL: avatarURL });
 
     res.json({ avatarURL });
-  });
+  } catch (error) {
+    console.error('Произошла ошибка:', error);
+    res.status(500).json({ error: 'Произошла ошибка при обновлении аватара.' });
+  }
 };
 
 module.exports = { updateAvatar: ctrlWrapper(updateAvatar) };

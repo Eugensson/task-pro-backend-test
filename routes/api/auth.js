@@ -1,6 +1,11 @@
 const express = require('express');
 
-const { validateBody, authenticate, upload } = require('../../middlewares');
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+const { validateBody, authenticate } = require('../../middlewares');
 
 const {
   userSchemaJoi,
