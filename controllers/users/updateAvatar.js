@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 const cloudinary = require('cloudinary').v2;
 const { ctrlWrapper } = require('../../helpers');
 const { User } = require('../../models/user');
@@ -20,7 +18,7 @@ const updateAvatar = async (req, res) => {
   try {
     const result = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: 'avatars' }, // Путь для хранения на Cloudinary
+        { folder: 'avatars' },
         (error, result) => {
           if (error) {
             reject(error);
