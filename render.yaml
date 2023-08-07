@@ -1,0 +1,5 @@
+buildCommand: yarn
+devCommand: yarn start
+staticPublishPath: public
+env: {}
+nodeVersion: 14.20.1
