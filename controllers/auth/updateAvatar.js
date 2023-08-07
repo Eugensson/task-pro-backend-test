@@ -37,8 +37,10 @@ const updateAvatar = async (req, res) => {
 
     res.json({ avatarURL });
   } catch (error) {
-    console.error('Произошла ошибка:', error);
-    res.status(500).json({ error: 'Произошла ошибка при обновлении аватара.' });
+    console.error('An error has occurred:', error);
+    res
+      .status(500)
+      .json({ error: 'An error occurred while updating the avatar' });
   }
 };
 

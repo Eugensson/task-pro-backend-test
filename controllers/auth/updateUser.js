@@ -1,24 +1,24 @@
-const { errorHandler, ctrlWrapper } = require('../../helpers');
-const { User } = require('../../models');
 const bcrypt = require('bcrypt');
+const { HttpError, ctrlWrapper } = require('../../helpers');
+const { User } = require('../../models');
 
 const updateUser = async (req, res) => {
   const { _id } = req.user;
 
   if (!_id) {
-    throw errorHandler(403);
+    throw HttpError(403);
   }
+
   const user = await User.findById(_id);
 
   if (!user) {
-    throw errorHandler(400);
+    throw HttpError(400);
   }
 
   const fieldToUpdate = Object.keys(user._doc).map(item => {
     if (Object.keys(req.body).includes(item)) {
       return item;
     }
-
     return item;
   });
 

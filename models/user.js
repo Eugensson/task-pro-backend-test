@@ -2,26 +2,10 @@ const { Schema, model } = require('mongoose');
 const joi = require('joi');
 
 const { handleMongooseError } = require('../helpers');
-// const emailRegexp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-// const passRegexp =
-//   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
-
 const emailRegexp =
   /^(?=.*[@.])[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*$/;
 // const passRegexp =
 //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
-
-// const iconList = [
-//   'project',
-//   'star',
-//   'loading',
-//   'puzzle-piece',
-//   'container',
-//   'lightning',
-//   'colors',
-//   'hexagon',
-// ];
-// const backgroundList = ['moon'];
 
 const userSchema = new Schema(
   {
@@ -56,26 +40,6 @@ const userSchema = new Schema(
 );
 
 userSchema.post('save', handleMongooseError);
-
-const userSchemaJoi = joi.object({
-  username: joi.string().min(2).max(32),
-  password: joi.string().required(),
-  email: joi.string().required(),
-  avatarURL: joi.string(),
-  token: joi.string().token().default(''),
-  theme: joi.string().valid('DARK', 'LIGHT', 'VIOLET').default('LIGHT'),
-});
-
-const updateThemeSchema = joi.object({
-  theme: joi.string().valid('DARK', 'LIGHT', 'VIOLET').required(),
-});
-
-const updateUserSchema = joi.object({
-  username: joi.string().min(2).max(32),
-  password: joi.string(),
-  email: joi.string(),
-  avatarURL: joi.string(),
-});
 
 // const board = {
 //   id: '',
@@ -140,20 +104,35 @@ const boardSchema = joi.object({
     .required(),
 });
 
-// const schemas = {
-//   registerSchema,
-//   loginSchema,
-//   boardSchema,
-//   updateThemeSchema,
-//   updateUserSchema,
-// };
+const registerSchema = joi.object({
+  username: joi.string().required(),
+  password: joi.string().required(),
+  email: joi.string().required(),
+});
+
+const loginSchema = joi.object({
+  password: joi.string().required(),
+  email: joi.string().required(),
+});
+
+const updateUserSchema = joi.object({
+  username: joi.string().min(2).max(32),
+  password: joi.string(),
+  email: joi.string(),
+  avatarURL: joi.string(),
+  theme: joi.string().valid('DARK', 'LIGHT', 'VIOLET').default('LIGHT'),
+});
+
+const schemas = {
+  registerSchema,
+  loginSchema,
+  updateUserSchema,
+  boardSchema,
+};
 
 const User = model('user', userSchema);
 
 module.exports = {
   User,
-  userSchemaJoi,
-  boardSchema,
-  updateThemeSchema,
-  updateUserSchema,
+  schemas,
 };

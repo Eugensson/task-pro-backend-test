@@ -5,9 +5,9 @@ require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-const authRouter = require('./routes/api/auth');
-const boardsRouter = require('./routes/api/boards');
+const authRouter = require('./routes/api/users');
 const helperRouter = require('./routes/api/helper');
+const boardsRouter = require('./routes/api/boards');
 
 const app = express();
 
