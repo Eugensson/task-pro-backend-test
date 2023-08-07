@@ -134,7 +134,7 @@
     "api/users/current": {
       "get": {
         "summary": "Get user info",
-        "tags": [{"name": "Auth"}],
+        "tags": ["Auth"],
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -344,7 +344,7 @@
       "CurrentRequest": {
         "type": "object",
         "required": ["token"],
-            "tags": ["Auth"],
+        "tags": ["Auth"],
         "properties": {
           "token": {
             "type": "string",
