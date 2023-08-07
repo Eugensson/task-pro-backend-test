@@ -4,8 +4,8 @@ const joi = require('joi');
 const { handleMongooseError } = require('../helpers');
 const emailRegexp =
   /^(?=.*[@.])[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*$/;
-// const passRegexp =
-//   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
+const passRegexp =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
 
 const userSchema = new Schema(
   {
@@ -21,7 +21,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      // match: passRegexp,
+      match: passRegexp,
       required: [true, 'Set password for user'],
     },
     avatarURL: { type: String, default: '' },
@@ -40,69 +40,6 @@ const userSchema = new Schema(
 );
 
 userSchema.post('save', handleMongooseError);
-
-// const board = {
-//   id: '',
-//   title: '',
-//   icon: '',
-//   background: '',
-//   boardsData: {
-//     columns: {
-//       awe: {
-//         id: '',
-//         title: '',
-//         taskIds: ['qwe'],
-//       },
-//     },
-//     tasks: {
-//       qwe: {
-//         id: '',
-//         title: '',
-//         description: '',
-//         priority: '',
-//         deadline: '',
-//       },
-//     },
-//     columnOrder: ['awe'],
-//   },
-// };
-
-const boardSchema = joi.object({
-  id: joi.string().required(),
-  title: joi.string().required(),
-  icon: joi.string().required(),
-  background: joi.string().required(),
-  boardsData: joi
-    .object()
-    .keys({
-      tasks: joi
-        .object()
-        .pattern(
-          joi.string(),
-          joi.object({
-            id: joi.string().required(),
-            title: joi.string().required(),
-            description: joi.string().required(),
-            priority: joi.string(),
-            deadline: joi.string(),
-          })
-        )
-        .default({}),
-      columns: joi
-        .object()
-        .pattern(
-          joi.string(),
-          joi.object({
-            id: joi.string().required(),
-            title: joi.string().required(),
-            taskIds: joi.array().items(joi.string()),
-          })
-        )
-        .default({}),
-      columnOrder: joi.array().items(joi.string()).required().default([]),
-    })
-    .required(),
-});
 
 const registerSchema = joi.object({
   username: joi.string().required(),
@@ -127,7 +64,6 @@ const schemas = {
   registerSchema,
   loginSchema,
   updateUserSchema,
-  boardSchema,
 };
 
 const User = model('user', userSchema);

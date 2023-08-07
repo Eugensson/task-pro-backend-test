@@ -1,8 +1,8 @@
-const { transport, HttpError } = require('../helpers');
-const { sendHelpRequestSchema } = require('../models/validationSchemas');
+const { ctrlWrapper, HttpError, transport } = require('../../helpers');
+const { helperSchema } = require('../../models/helper');
 
 const sendHelpRequest = async (req, res) => {
-  const { error } = sendHelpRequestSchema.validate(req.body);
+  const { error } = helperSchema.validate(req.body);
   if (error) {
     return res.status(400).json({ error: HttpError(400) });
   }
@@ -10,8 +10,8 @@ const sendHelpRequest = async (req, res) => {
 
   try {
     const mailOptions = {
-      from: 'task-board@meta.ua',
-      to: 'taskpro.project@gmail.com',
+      from: 'eco2023@meta.ua',
+      to: 'twitch.live.ua@gmail.com',
       subject: 'Help Request',
       text: `Email: ${email}\nComment: ${comment}`,
     };
@@ -25,4 +25,4 @@ const sendHelpRequest = async (req, res) => {
   }
 };
 
-module.exports = sendHelpRequest;
+module.exports = { sendHelpRequest: ctrlWrapper(sendHelpRequest) };

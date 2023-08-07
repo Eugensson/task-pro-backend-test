@@ -2,17 +2,17 @@ const express = require('express');
 
 const { validateBody, authenticate } = require('../../middlewares');
 
-const { sendHelpRequestSchema } = require('../../models/validationSchemas');
+const { helperSchema } = require('../../models/helper');
 
-const sendHelpRequest = require('../../utils/helper');
+const ctrl = require('../../controllers/hepler');
 
 const router = express.Router();
 
 router.post(
   '/',
   authenticate,
-  validateBody(sendHelpRequestSchema),
-  sendHelpRequest
+  validateBody(helperSchema),
+  ctrl.sendHelpRequest
 );
 
 module.exports = router;

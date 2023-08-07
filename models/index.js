@@ -3,9 +3,9 @@ const {
   userSchemaJoi,
   boardSchema,
   updateUserSchema,
-  updateThemeSchema
+  updateThemeSchema,
 } = require('./user');
-const { sendHelpRequestSchema } = require('./validationSchemas');
+const { sendHelpRequestSchema } = require('./helper');
 
 module.exports = {
   User,

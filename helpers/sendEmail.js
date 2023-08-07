@@ -7,7 +7,7 @@ const nodemailerConfig = {
   port: 465,
   secure: true,
   auth: {
-    user: 'task-board@meta.ua',
+    user: 'eco2023@meta.ua',
     pass: META_PASSWORD,
   },
 };
