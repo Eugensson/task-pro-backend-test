@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "api/users/auth/register": {
+    "api/auth/register": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -58,7 +58,7 @@
         }
       }
     },
-    "api/users/auth/login": {
+    "api/auth/login": {
       "post": {
         "tags": ["Auth"],
         "summary": "User loginization",
@@ -92,7 +92,7 @@
         }
       }
     },
-    "api/users/auth/logout": {
+    "api/auth/logout": {
       "post": {
         "tags": ["Auth"],
         "summary": "User Logout",
@@ -127,7 +127,7 @@
         }
       }
     },
-    "api/users/auth/current": {
+    "api/users/current": {
       "get": {
         "tags": ["Auth"],
         "summary": "Get user info",
@@ -166,7 +166,7 @@
         }
       }
     },
-    "api/users/auth/theme": {
+    "api/users/theme": {
       "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -205,7 +205,7 @@
         }
       }
     },
-    "api/users/auth/data": {
+    "api/users/data": {
       "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -244,7 +244,7 @@
         }
       }
     },
-    "api/users/auth/avatars": {
+    "api/users/avatars": {
       "patch": {
         "tags": ["Auth"],
         "summary": "User registration",
