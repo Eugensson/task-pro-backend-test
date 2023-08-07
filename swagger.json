@@ -594,6 +594,79 @@
           }
         }
       }
+    },"tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    }
+  ],"components": {
+    "schemas": {
+      "CurrentRequest": {
+        "type": "object",
+        "required": ["token"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's JWTtoken",
+            "format": "JWTtoken"
+          }
+        }
+      },
+      "ThemeRequest": {
+        "type": "object",
+        "required": ["token", "theme"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's theme",
+            "format": "JWTtoken"
+          },
+          "theme": {
+            "type": "string",
+            "description": "User's requested theme",
+            "example": "LIGHT"
+          }
+        }
+      },
+      "UpdateDataRequest": {
+        "type": "object",
+        "required": ["token"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "username": {
+            "type": "string",
+            "description": "User's username",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "AvatarsRequest": {
+        "type": "file",
+        "required": ["token", "avatar"],
+        "items": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "format": "token"
+            },
+            "avatar": {
+              "type": "file",
+              "description": "User's avatar"
+            }
+          }
+        }
+      }
     },
     "securitySchemes": {
       "Bearer": {
@@ -603,4 +676,5 @@
       }
     }
   }
+}
 }
