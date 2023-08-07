@@ -133,9 +133,8 @@
     },
     "api/users/current": {
       "get": {
-        
         "summary": "Get user info",
-        "tags": [{"name":"Auth"}],
+        "tags": [{"name": "Auth"}],
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
