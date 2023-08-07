@@ -16,6 +16,10 @@
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+      {
+      "name": "User",
+      "description": "User endpoints"
     }
   ],
   "paths": {
@@ -288,6 +292,7 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
+        "tags": [{"name": "Auth"}],
         "required": ["username", "email", "password"],
         "properties": {
           "email": {
@@ -310,6 +315,7 @@
       "LoginizationRequest": {
         "type": "object",
         "required": ["email", "password"],
+        "tags": [{"name": "Auth"}],
         "properties": {
           "email": {
             "type": "string",
@@ -325,7 +331,8 @@
       },
       "LogoutRequest": {
         "type": "object",
-        "required": ["token"],
+        "required": ["token"],   
+         "tags": [{"name": "Auth"}],
         "properties": {
           "token": {
             "type": "string",
@@ -337,6 +344,7 @@
       "CurrentRequest": {
         "type": "object",
         "required": ["token"],
+            "tags": [{"name": "User"}],
         "properties": {
           "token": {
             "type": "string",
@@ -348,6 +356,7 @@
       "ThemeRequest": {
         "type": "object",
         "required": ["token", "theme"],
+        "tags": [{"name": "User"}],
         "properties": {
           "token": {
             "type": "string",
@@ -364,6 +373,7 @@
       "UpdateDataRequest": {
         "type": "object",
         "required": ["token"],
+        "tags": [{"name": "User"}],
         "properties": {
           "email": {
             "type": "string",
@@ -385,6 +395,7 @@
       "AvatarsRequest": {
         "type": "file",
         "required": ["token", "avatar"],
+        "tags": [{"name": "User"}],
         "items": {
           "type": "object",
           "properties": {
@@ -594,79 +605,6 @@
           }
         }
       }
-    },"tags": [
-    {
-      "name": "User",
-      "description": "User endpoints"
-    }
-  ],"components": {
-    "schemas": {
-      "CurrentRequest": {
-        "type": "object",
-        "required": ["token"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User's JWTtoken",
-            "format": "JWTtoken"
-          }
-        }
-      },
-      "ThemeRequest": {
-        "type": "object",
-        "required": ["token", "theme"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User's theme",
-            "format": "JWTtoken"
-          },
-          "theme": {
-            "type": "string",
-            "description": "User's requested theme",
-            "example": "LIGHT"
-          }
-        }
-      },
-      "UpdateDataRequest": {
-        "type": "object",
-        "required": ["token"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "username": {
-            "type": "string",
-            "description": "User's username",
-            "example": "qwerty123"
-          }
-        }
-      },
-      "AvatarsRequest": {
-        "type": "file",
-        "required": ["token", "avatar"],
-        "items": {
-          "type": "object",
-          "properties": {
-            "token": {
-              "type": "string",
-              "description": "User's token",
-              "format": "token"
-            },
-            "avatar": {
-              "type": "file",
-              "description": "User's avatar"
-            }
-          }
-        }
-      }
     },
     "securitySchemes": {
       "Bearer": {
@@ -677,4 +615,4 @@
     }
   }
 }
-}
+
