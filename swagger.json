@@ -344,7 +344,7 @@
       "CurrentRequest": {
         "type": "object",
         "required": ["token"],
-            "tags": [{"name": "User"}],
+            "tags": ["Auth"],
         "properties": {
           "token": {
             "type": "string",
