@@ -18,25 +18,24 @@ const addBoardSchema = joi.object({
     .default('icon-project'),
   background: joi
     .string()
-    .valid(
-      'bg1.jpg',
-      'bg2.jpg',
-      'bg3.jpg',
-      'bg4.jpg',
-      'bg5.jpg',
-      'bg6.jpg',
-      'bg7.jpg',
-      'bg8.jpg',
-      'bg9.jpg',
-      'bg10.jpg',
-      'bg11.jpg',
-      'bg12.jpg',
-      'bg13.jpg',
-      'bg14.jpg',
-      'bg15.jpg',
-      'bg16.jpg'
-    )
-    .default('bg1.jpg'),
+    .valid([
+      'bg1',
+      'bg2',
+      'bg3',
+      'bg4',
+      'bg5',
+      'bg6',
+      'bg7',
+      'bg8',
+      'bg9',
+      'bg10',
+      'bg11',
+      'bg12',
+      'bg13',
+      'bg14',
+      'bg15',
+      'bg16',
+    ]),
   boardsData: joi
     .object()
     .keys({
