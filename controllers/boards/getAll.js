@@ -1,4 +1,4 @@
-const { Board } = require('../../models/board');
+const { Board } = require('../../models');
 const { ctrlWrapper } = require('../../helpers');
 
 const getAll = async (req, res) => {

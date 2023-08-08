@@ -1,12 +1,8 @@
 const express = require('express');
-
-const { validateBody, authenticate } = require('../../middlewares');
-
-const { helperSchema } = require('../../models/helper');
-
-const ctrl = require('../../controllers/hepler');
-
 const router = express.Router();
+const { validateBody, authenticate } = require('../../middlewares');
+const { helperSchema } = require('../../schemas');
+const ctrl = require('../../controllers/hepler');
 
 router.post(
   '/',

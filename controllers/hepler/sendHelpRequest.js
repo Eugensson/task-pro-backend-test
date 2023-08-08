@@ -1,5 +1,5 @@
 const { ctrlWrapper, HttpError, transport } = require('../../helpers');
-const { helperSchema } = require('../../models/helper');
+const { helperSchema } = require('../../schemas');
 
 const sendHelpRequest = async (req, res) => {
   const { error } = helperSchema.validate(req.body);

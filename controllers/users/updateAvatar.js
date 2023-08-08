@@ -1,6 +1,6 @@
 const cloudinary = require('cloudinary').v2;
 const { ctrlWrapper } = require('../../helpers');
-const { User } = require('../../models/user');
+const { User } = require('../../models');
 
 const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME;
 const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;

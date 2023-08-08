@@ -1,5 +1,5 @@
-const { Board } = require('../../models/board');
-const { User } = require('../../models/user');
+const { Board } = require('../../models');
+const { User } = require('../../models');
 const { HttpError, ctrlWrapper } = require('../../helpers');
 
 const deleteById = async (req, res) => {

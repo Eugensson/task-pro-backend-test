@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
 const { validateBody, authenticate, upload } = require('../../middlewares');
-const { schemas } = require('../../models/user');
+const { updateUserSchema } = require('../../schemas');
 const ctrl = require('../../controllers/users');
 
 router.get('/current', authenticate, ctrl.getCurrent);
@@ -10,7 +9,7 @@ router.get('/current', authenticate, ctrl.getCurrent);
 router.patch(
   '/update',
   authenticate,
-  validateBody(schemas.updateUserSchema),
+  validateBody(updateUserSchema),
   ctrl.updateUser
 );
 

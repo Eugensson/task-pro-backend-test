@@ -1,4 +1,4 @@
-const { Board } = require('../../models/board');
+const { Board } = require('../../models');
 const { HttpError, ctrlWrapper } = require('../../helpers');
 
 const updateById = async (req, res) => {
