@@ -18,7 +18,7 @@ const addBoardSchema = joi.object({
     .default('icon-project'),
   background: joi
     .string()
-    .valid([
+    .valid(
       'bg1',
       'bg2',
       'bg3',
@@ -34,8 +34,8 @@ const addBoardSchema = joi.object({
       'bg13',
       'bg14',
       'bg15',
-      'bg16',
-    ]),
+      'bg16'
+    ),
   boardsData: joi
     .object()
     .keys({
