@@ -1,17 +1,19 @@
-const { Board } = require('../../models');
-const { User } = require('../../models');
+const { User, Board } = require('../../models');
 const { ctrlWrapper } = require('../../helpers');
 
 const add = async (req, res) => {
   const { _id: owner, boards } = req.user;
+  const { boardsData, id } = req.body;
 
-  const result = await Board.create({ ...req.body, owner });
+  const boardDataWithOwner = { ...req.body, owner };
+
+  const result = await Board.create(boardDataWithOwner);
 
   const updatedBoards = [...boards, result._id];
-
   await User.updateOne({ _id: owner }, { boards: updatedBoards });
 
-  res.status(201).json(result);
+  const modifiedResult = { ...result._doc, boardsData, id };
+  res.status(201).json(modifiedResult);
 };
 
 module.exports = {

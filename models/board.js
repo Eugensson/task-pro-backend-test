@@ -4,6 +4,7 @@ const { handleMongooseError } = require('../helpers');
 
 const boardSchema = new Schema(
   {
+    id: { type: String, unique: true, required: [true, 'Set board id'] },
     title: {
       type: String,
       required: [true, 'Set title for board'],
@@ -44,9 +45,21 @@ const boardSchema = new Schema(
       ],
       default: 'bg1',
     },
-    columns: {
-      type: Array,
-      default: [],
+    boardsData: {
+      tasks: {
+        type: Object,
+        required: true,
+        default: {},
+      },
+      columns: {
+        type: Object,
+        required: true,
+        default: {},
+      },
+      columnOrder: {
+        type: Array,
+        default: [],
+      },
     },
     owner: {
       type: mongoose.Types.ObjectId,
