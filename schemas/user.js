@@ -16,7 +16,7 @@ const updateUserSchema = joi.object({
   password: joi.string(),
   email: joi.string(),
   avatarURL: joi.string(),
-  theme: joi.string().valid('DARK', 'LIGHT', 'VIOLET').default('LIGHT'),
+  theme: joi.string().valid('DARK', 'LIGHT', 'VIOLET'),
 });
 
 module.exports = { registerSchema, loginSchema, updateUserSchema };
