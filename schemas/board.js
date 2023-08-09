@@ -1,7 +1,7 @@
 const joi = require('joi');
 
 const addBoardSchema = joi.object({
-  id: joi.string().required(),
+  // id: joi.string().required(),
   title: joi.string().required(),
   icon: joi.string().required(),
   background: joi.string().required(),
@@ -38,7 +38,7 @@ const addBoardSchema = joi.object({
 });
 
 const updateBoardSchema = joi.object({
-  id: joi.string().required(),
+  // id: joi.string().required(),
   title: joi.string().required(),
   icon: joi.string().required(),
   background: joi.string().required(),
