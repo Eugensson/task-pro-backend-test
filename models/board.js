@@ -4,7 +4,7 @@ const { handleMongooseError } = require('../helpers');
 
 const boardSchema = new Schema(
   {
-    id: { type: String, unique: true },
+    id: { type: String, unique: true, required: [true, 'Set board Id'] },
     title: {
       type: String,
       required: [true, 'Set title for board'],
