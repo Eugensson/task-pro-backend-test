@@ -14,15 +14,6 @@ router.patch(
 );
 
 router.patch(
-  '/theme',
-  authenticate,
-  validateBody(updateUserSchema),
-  ctrl.updateTheme
-);
-
-module.exports = router;
-
-router.patch(
   '/avatars',
   authenticate,
   upload.single('avatar'),
