@@ -17,18 +17,25 @@
       "name": "Auth",
       "description": "Authorization endpoints"
     },
-      {
-      "name": "User",
+    {
+      "name": "Users",
       "description": "User endpoints"
+    },
+    {
+      "name": "Boards",
+      "description": "Board endpoints"
+    },
+    {
+      "name": "Helper",
+      "description": "Helper endpoints"
     }
   ],
   "paths": {
-    "api/auth/register": {
+    "/api/auth/register": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -131,158 +138,171 @@
         }
       }
     },
-    "api/users/current": {
+    "/api/users/current": {
       "get": {
         "summary": "Get user info",
-        "tags": ["User"],
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Registration's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CurrentRequest"
-              }
-            }
-          }
-        },
+        "tags": ["Users"],
         "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CurrentResponse"
-                }
-              }
-            }
+          "200": {
+            "$ref": "#/components/responses/CurrentResponse"
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Edit user profile",
+        "tags": ["Users"],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateDataRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UpdateDataResponse"
+          },
+          "400": {
+            "description": "Bad request (invalid request body)"
+          },
+          "409": {
+            "description": "Provided email already exists"
           }
         }
       }
     },
-    "api/users/theme": {
+    "/api/users/avatars": {
       "patch": {
-        "tags": ["User"],
-        "summary": "User registration",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "summary": "Edit user avatar",
+        "tags": ["Users"],
         "requestBody": {
-          "description": "Registration's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ThemeRequest"
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/AvatarsRequest"
         },
         "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ThemeResponse"
-                }
-              }
-            }
+          "200": {
+            "$ref": "#/components/responses/AvatarsResponse"
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
           }
         }
       }
     },
-    "api/users/data": {
-      "patch": {
-        "tags": ["User"],
-        "summary": "User registration",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Registration's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateDataRequest"
-              }
-            }
-          }
-        },
+    "/api/boards": {
+      "get": {
+        "summary": "Get user boards",
+        "tags": ["Boards"],
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateDataResponse"
+                  "$ref": "#/components/schemas/UserBoards"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new board",
+        "tags": ["Boards"],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/NewBoardRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/NewBoardResponse"
+          },
+          "400": {
+            "description": "Bad request (invalid request body)"
+          },
+          "409": {
+            "description": "Provided email already exists"
           }
         }
       }
     },
-    "api/users/avatars": {
+    "/api/boards/{boardID}": {
       "patch": {
-        "tags": ["User"],
-        "summary": "User registration",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "summary": "Edit a board",
+        "tags": ["Boards"],
         "requestBody": {
-          "description": "Registration's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AvatarsRequest"
-              }
+          "$ref": "#/components/requestBodies/EditBoardRequest"
+        },
+        "parameters": [
+          {
+            "name": "boardID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AvatarsResponse"
-                }
-              }
-            }
+          "200": {
+            "$ref": "#/components/responses/EditBoardResponse"
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad request (invalid request body)"
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Provided email already exists"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a board",
+        "tags": ["Boards"],
+        "parameters": [
+          {
+            "name": "boardID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeleteBoardResponse"
+          },
+          "400": {
+            "description": "Bad request (invalid request body)"
+          },
+          "409": {
+            "description": "Provided email already exists"
+          }
+        }
+      }
+    },
+    "/api/helper": {
+      "post": {
+        "summary": "Send a helper email",
+        "tags": ["Helper"],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/HelperRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/HelperResponse"
+          },
+          "400": {
+            "description": "Bad request (invalid request body)"
           }
         }
       }
@@ -314,7 +334,7 @@
       "LoginizationRequest": {
         "type": "object",
         "required": ["email", "password"],
-    
+
         "properties": {
           "email": {
             "type": "string",
@@ -330,7 +350,7 @@
       },
       "LogoutRequest": {
         "type": "object",
-        "required": ["token"],   
+        "required": ["token"],
 
         "properties": {
           "token": {
@@ -343,7 +363,7 @@
       "CurrentRequest": {
         "type": "object",
         "required": ["token"],
-   
+
         "properties": {
           "token": {
             "type": "string",
@@ -372,7 +392,7 @@
       "UpdateDataRequest": {
         "type": "object",
         "required": ["token"],
-        "tags": [{"name": "User"}],
+        "tags": [{ "name": "User" }],
         "properties": {
           "email": {
             "type": "string",
@@ -394,7 +414,7 @@
       "AvatarsRequest": {
         "type": "file",
         "required": ["token", "avatar"],
-        "tags": [{"name": "User"}],
+        "tags": [{ "name": "User" }],
         "items": {
           "type": "object",
           "properties": {
@@ -614,4 +634,3 @@
     }
   }
 }
-

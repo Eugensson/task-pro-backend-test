@@ -7,7 +7,7 @@ const ctrl = require('../../controllers/users');
 router.get('/current', authenticate, ctrl.getCurrent);
 
 router.patch(
-  '/update',
+  '/current',
   authenticate,
   validateBody(updateUserSchema),
   ctrl.updateUser

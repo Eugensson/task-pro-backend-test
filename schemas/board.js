@@ -3,39 +3,8 @@ const joi = require('joi');
 const addBoardSchema = joi.object({
   id: joi.string().required(),
   title: joi.string().required(),
-  icon: joi
-    .string()
-    .valid(
-      'icon-project',
-      'icon-star',
-      'icon-loading',
-      'icon-puzzle-piece',
-      'icon-container',
-      'icon-lightning',
-      'icon-colors',
-      'icon-hexagon'
-    )
-    .default('icon-project'),
-  background: joi
-    .string()
-    .valid(
-      'bg1',
-      'bg2',
-      'bg3',
-      'bg4',
-      'bg5',
-      'bg6',
-      'bg7',
-      'bg8',
-      'bg9',
-      'bg10',
-      'bg11',
-      'bg12',
-      'bg13',
-      'bg14',
-      'bg15',
-      'bg16'
-    ),
+  icon: joi.string().required(),
+  background: joi.string().required(),
   boardsData: joi
     .object()
     .keys({
