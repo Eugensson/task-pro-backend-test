@@ -107,7 +107,6 @@
       "post": {
         "tags": ["Auth"],
         "summary": "User Logout",
-        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration's object",
@@ -141,6 +140,7 @@
     "/api/users/current": {
       "get": {
         "summary": "Get user info",
+        "security": [{ "Bearer": [] }],
         "tags": ["Users"],
         "responses": {
           "200": {
@@ -156,9 +156,10 @@
       },
       "patch": {
         "summary": "Edit user profile",
+        "security": [{ "Bearer": [] }],
         "tags": ["Users"],
         "requestBody": {
-          "$ref": "#/components/requestBodies/UpdateDataRequest"
+          "$ref": "#/components/request/UpdateDataRequest"
         },
         "responses": {
           "200": {
@@ -176,13 +177,14 @@
     "/api/users/avatars": {
       "patch": {
         "summary": "Edit user avatar",
+        "security": [{ "Bearer": [] }],
         "tags": ["Users"],
         "requestBody": {
-          "$ref": "#/components/requestBodies/AvatarsRequest"
+          "$ref": "#/components/schemas/AvatarsRequest"
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/AvatarsResponse"
+            "$ref": "#/components/schemas/AvatarsResponse"
           },
           "400": {
             "description": "Bad request (invalid request body)"
@@ -196,6 +198,8 @@
     "/api/boards": {
       "get": {
         "summary": "Get user boards",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
         "tags": ["Boards"],
         "responses": {
           "200": {
@@ -218,6 +222,7 @@
       },
       "post": {
         "summary": "Create a new board",
+        "security": [{ "Bearer": [] }],
         "tags": ["Boards"],
         "requestBody": {
           "$ref": "#/components/requestBodies/NewBoardRequest"
@@ -238,6 +243,7 @@
     "/api/boards/{boardID}": {
       "patch": {
         "summary": "Edit a board",
+        "security": [{ "Bearer": [] }],
         "tags": ["Boards"],
         "requestBody": {
           "$ref": "#/components/requestBodies/EditBoardRequest"
@@ -266,6 +272,7 @@
       },
       "delete": {
         "summary": "Delete a board",
+        "security": [{ "Bearer": [] }],
         "tags": ["Boards"],
         "parameters": [
           {
@@ -293,6 +300,7 @@
     "/api/helper": {
       "post": {
         "summary": "Send a helper email",
+        "security": [{ "Bearer": [] }],
         "tags": ["Helper"],
         "requestBody": {
           "$ref": "#/components/requestBodies/HelperRequest"
@@ -360,18 +368,6 @@
           }
         }
       },
-      "CurrentRequest": {
-        "type": "object",
-        "required": ["token"],
-
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User's JWTtoken",
-            "format": "JWTtoken"
-          }
-        }
-      },
       "ThemeRequest": {
         "type": "object",
         "required": ["token", "theme"],
@@ -389,32 +385,28 @@
           }
         }
       },
-      "UpdateDataRequest": {
-        "type": "object",
-        "required": ["token"],
-        "tags": [{ "name": "User" }],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "username": {
-            "type": "string",
-            "description": "User's username",
-            "example": "qwerty123"
-          }
-        }
-      },
       "AvatarsRequest": {
         "type": "file",
         "required": ["token", "avatar"],
         "tags": [{ "name": "User" }],
+        "items": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "format": "token"
+            },
+            "avatar": {
+              "type": "file",
+              "description": "User's avatar"
+            }
+          }
+        }
+      },
+      "AvatarsResponse": {
+        "type": "file",
+        "required": ["token", "avatar"],
         "items": {
           "type": "object",
           "properties": {
@@ -509,6 +501,55 @@
           }
         }
       },
+      "ThemeResponse": {
+        "type": "object",
+        "required": ["theme"],
+        "properties": {
+          "theme": {
+            "type": "string",
+            "description": "User's Responseed theme",
+            "example": "LIGHT"
+          }
+        }
+      }
+    },
+    "request": {
+      "CurrentRequest": {
+        "type": "object",
+        "required": ["token"],
+
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's JWTtoken",
+            "format": "JWTtoken"
+          }
+        }
+      },
+      "UpdateDataRequest": {
+        "type": "object",
+        "required": ["token"],
+        "tags": [{ "name": "User" }],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "username": {
+            "type": "string",
+            "description": "User's username",
+            "example": "qwerty123"
+          }
+        }
+      }
+    },
+    "responses": {
       "CurrentResponse": {
         "type": "object",
         "required": [
@@ -549,17 +590,6 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          }
-        }
-      },
-      "ThemeResponse": {
-        "type": "object",
-        "required": ["theme"],
-        "properties": {
-          "theme": {
-            "type": "string",
-            "description": "User's Responseed theme",
-            "example": "LIGHT"
           }
         }
       },
@@ -605,26 +635,9 @@
             "example": "qwerty123"
           }
         }
-      },
-      "AvatarsResponse": {
-        "type": "file",
-        "required": ["token", "avatar"],
-        "items": {
-          "type": "object",
-          "properties": {
-            "token": {
-              "type": "string",
-              "description": "User's token",
-              "format": "token"
-            },
-            "avatar": {
-              "type": "file",
-              "description": "User's avatar"
-            }
-          }
-        }
       }
     },
+
     "securitySchemes": {
       "Bearer": {
         "type": "http",
