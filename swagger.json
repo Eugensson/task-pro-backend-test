@@ -86,7 +86,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -98,6 +98,10 @@
           },
           "400": {
             "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Email or password is wrong",
             "content": {}
           }
         }
@@ -132,9 +136,20 @@
     },
     "/api/users/current": {
       "get": {
-        "summary": "Get user info",
+        "summary": "Get information about the current user",
         "security": [{ "Bearer": [] }],
         "tags": ["Users"],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrentRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -149,8 +164,8 @@
           "400": {
             "description": "Bad request (invalid request body)"
           },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "Not authorized"
           }
         }
       },
@@ -168,8 +183,8 @@
           "400": {
             "description": "Bad request (invalid request body)"
           },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "Not authorized"
           }
         }
       }
@@ -189,8 +204,8 @@
           "400": {
             "description": "Bad request (invalid request body)"
           },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "Not authorized"
           }
         }
       }
@@ -215,8 +230,8 @@
           "400": {
             "description": "Bad request (invalid request body)"
           },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "Not authorized"
           }
         }
       },
@@ -234,8 +249,8 @@
           "400": {
             "description": "Bad request (invalid request body)"
           },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "Not authorized"
           }
         }
       }
@@ -265,8 +280,8 @@
           "400": {
             "description": "Bad request (invalid request body)"
           },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "Not authorized"
           }
         }
       },
@@ -291,8 +306,8 @@
           "400": {
             "description": "Bad request (invalid request body)"
           },
-          "409": {
-            "description": "Provided email already exists"
+          "401": {
+            "description": "Not authorized"
           }
         }
       }
@@ -432,6 +447,19 @@
           }
         }
       },
+      "CurrentRequest": {
+        "type": "object",
+        "required": ["token"],
+
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's JWTtoken",
+            "format": "JWTtoken",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
+          }
+        }
+      },
       "CurrentResponse": {
         "type": "object",
         "required": [
@@ -445,6 +473,11 @@
           "token"
         ],
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "64d3b91a88e63627a06db81b"
+          },
           "username": {
             "type": "string",
             "description": "User's name",
@@ -482,23 +515,6 @@
           }
         }
       },
-      "ThemeRequest": {
-        "type": "object",
-        "required": ["token", "theme"],
-        "tags": ["User"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User's theme",
-            "format": "JWTtoken"
-          },
-          "theme": {
-            "type": "string",
-            "description": "User's requested theme",
-            "example": "LIGHT"
-          }
-        }
-      },
       "AvatarsRequest": {
         "type": "file",
         "required": ["token", "avatar"],
@@ -533,18 +549,6 @@
               "type": "file",
               "description": "User's avatar"
             }
-          }
-        }
-      },
-
-      "ThemeResponse": {
-        "type": "object",
-        "required": ["theme"],
-        "properties": {
-          "theme": {
-            "type": "string",
-            "description": "User's Responseed theme",
-            "example": "LIGHT"
           }
         }
       }
