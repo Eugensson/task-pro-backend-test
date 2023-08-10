@@ -51,7 +51,7 @@ const updateUser = async (req, res) => {
     { new: true }
   );
 
-  res.status(200).json({ data: newUser });
+  res.status(200).json(newUser);
 };
 
 module.exports = {

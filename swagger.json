@@ -144,7 +144,14 @@
         "tags": ["Users"],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/CurrentResponse"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad request (invalid request body)"
@@ -356,6 +363,51 @@
           }
         }
       },
+      "CurrentResponse": {
+        "type": "object",
+        "required": [
+          "username",
+          "_id",
+          "email",
+          "password",
+          "avatarURL",
+          "theme",
+          "boards",
+          "token"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "username": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "boards": {
+            "type": "object",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "token": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
       "LogoutRequest": {
         "type": "object",
         "required": ["token"],
@@ -550,49 +602,6 @@
       }
     },
     "responses": {
-      "CurrentResponse": {
-        "type": "object",
-        "required": [
-          "email",
-          "password",
-          "username",
-          "avatar",
-          "boards",
-          "token"
-        ],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "username": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "avatar": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "boards": {
-            "type": "object",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "token": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          }
-        }
-      },
       "UpdateDataResponse": {
         "type": "object",
         "required": [
