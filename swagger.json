@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
     "title": "Tasks-Pro API",
@@ -27,7 +27,7 @@
     },
     {
       "name": "Helper",
-      "description": "Helper endpoints"
+      "description": "Helper endpoint"
     }
   ],
   "paths": {
@@ -35,85 +35,72 @@
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
-        "parameters": [],
         "requestBody": {
-          "description": "Registration's object",
           "required": true,
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/RegisterRequest"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Successful operation",
+            "description": "New user is registered",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/RegisterResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
-            "content": {}
-          }
+          "400": { "description": "Validation error" },
+          "409": { "description": "User with such email already exists" }
         }
       }
     },
-    "api/auth/login": {
+    "/api/auth/login": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User loginization",
-        "parameters": [],
+        "summary": "User login",
         "requestBody": {
-          "description": "Loginization's object",
           "required": true,
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginizationRequest"
+                "$ref": "#/components/schemas/LoginRequest"
               }
             }
           }
         },
         "responses": {
-          "200": {
-            "description": "Successful operation",
+          "201": {
+            "description": "Created session for existing user",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginizationResponse"
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "401": {
-            "description": "Email or password is wrong",
-            "content": {}
-          }
+          "400": { "description": "Validation error" },
+          "403": { "description": "Provided password is incorrect" },
+          "404": { "description": "User with such email not found" }
         }
       }
     },
-    "api/auth/logout": {
+    "/api/auth/logout": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User Logout",
+        "summary": "User logout",
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "",
           "required": true,
           "content": {
             "application/json": {
@@ -124,21 +111,16 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          }
+          "204": { "description": "User signed out" },
+          "401": { "description": "Missing header with authorization token" }
         }
       }
     },
     "/api/users/current": {
       "get": {
-        "summary": "Get information about the current user",
-        "security": [{ "Bearer": [] }],
         "tags": ["Users"],
+        "summary": "Get current user's data",
+        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "",
           "required": true,
@@ -152,7 +134,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Logged user returned",
             "content": {
               "application/json": {
                 "schema": {
@@ -161,243 +143,146 @@
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "401": {
-            "description": "Not authorized"
-          }
+          "401": { "description": "Missing header with authorization token" }
         }
       },
       "patch": {
-        "summary": "Edit user profile",
-        "security": [{ "Bearer": [] }],
         "tags": ["Users"],
+        "summary": "Edit current user's profile",
+        "security": [{ "Bearer": [] }],
         "requestBody": {
-          "$ref": "#/components/request/UpdateDataRequest"
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrentUpdateRequest"
+              }
+            }
+          }
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/UpdateDataResponse"
+            "description": "User info updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUpdateResponse"
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "401": {
-            "description": "Not authorized"
-          }
+          "400": { "description": "Validation error" },
+          "401": { "description": "Missing header with authorization token" }
         }
       }
     },
     "/api/users/avatars": {
       "patch": {
-        "summary": "Edit user avatar",
-        "security": [{ "Bearer": [] }],
         "tags": ["Users"],
+        "summary": "Edit current user's avatar",
+        "security": [{ "Bearer": [] }],
         "requestBody": {
-          "$ref": "#/components/schemas/AvatarsRequest"
+          "description": "",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AvatarUpdateRequest"
+              }
+            }
+          }
         },
         "responses": {
           "200": {
-            "$ref": "#/components/schemas/AvatarsResponse"
+            "description": "User avatarURL updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvatarUpdateResponse"
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "401": {
-            "description": "Not authorized"
-          }
+          "400": { "description": "Validation error" },
+          "401": { "description": "Missing header with authorization token" }
         }
       }
     },
     "/api/boards": {
       "get": {
-        "summary": "Get user boards",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
         "tags": ["Boards"],
+        "summary": "Get all boards for current user",
+        "security": [{ "Bearer": [] }],
         "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserBoards"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "401": {
-            "description": "Not authorized"
-          }
+          "200": { "description": "Boards found" },
+          "401": { "description": "Missing header with authorization token" }
         }
       },
       "post": {
-        "summary": "Create a new board",
-        "security": [{ "Bearer": [] }],
         "tags": ["Boards"],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/NewBoardRequest"
-        },
+        "summary": "Add a new board for current user",
+        "security": [{ "Bearer": [] }],
         "responses": {
-          "201": {
-            "$ref": "#/components/responses/NewBoardResponse"
-          },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "401": {
-            "description": "Not authorized"
-          }
+          "201": { "description": "The board was successfully created" },
+          "400": { "description": "Error creating board" },
+          "401": { "description": "Missing header with authorization token" }
         }
       }
     },
     "/api/boards/{boardID}": {
       "patch": {
-        "summary": "Edit a board",
-        "security": [{ "Bearer": [] }],
         "tags": ["Boards"],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/EditBoardRequest"
-        },
-        "parameters": [
-          {
-            "name": "boardID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Edit a board for current user",
+        "security": [{ "Bearer": [] }],
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/EditBoardResponse"
-          },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "401": {
-            "description": "Not authorized"
-          }
+          "200": { "description": "The board was successfully updated" },
+          "400": { "description": "Board update failed" },
+          "401": { "description": "Missing header with authorization token" }
         }
       },
       "delete": {
-        "summary": "Delete a board",
-        "security": [{ "Bearer": [] }],
         "tags": ["Boards"],
-        "parameters": [
-          {
-            "name": "boardID",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Delete a board for current user",
+        "security": [{ "Bearer": [] }],
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/DeleteBoardResponse"
-          },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          },
-          "401": {
-            "description": "Not authorized"
-          }
+          "200": { "description": "The board was successfully deleted" },
+          "401": { "description": "Missing header with authorization token" },
+          "404": { "description": "There is no such user board" },
+          "500": { "description": "Server error" }
         }
       }
     },
     "/api/helper": {
       "post": {
-        "summary": "Send a helper email",
-        "security": [{ "Bearer": [] }],
         "tags": ["Helper"],
+        "summary": "Send a help request",
+        "security": [{ "Bearer": [] }],
         "requestBody": {
-          "$ref": "#/components/requestBodies/HelperRequest"
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HelperRequest"
+              }
+            }
+          }
         },
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/HelperResponse"
-          },
-          "400": {
-            "description": "Bad request (invalid request body)"
-          }
+          "200": { "description": "Help request sent successfully" },
+          "400": { "description": "Validation error" },
+          "500": { "description": "Failed to send help request" }
         }
       }
     }
   },
   "components": {
     "schemas": {
-      "RegistrationRequest": {
+      "RegisterRequest": {
         "type": "object",
         "required": ["username", "email", "password"],
         "properties": {
-          "username": {
-            "type": "string",
-            "description": "User's username",
-            "example": "qwerty123"
-          },
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          }
-        }
-      },
-      "RegistrationResponse": {
-        "type": "object",
-        "required": ["email"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's id",
-            "format": "email"
-          }
-        }
-      },
-      "LoginizationRequest": {
-        "type": "object",
-        "required": ["email", "password"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          }
-        }
-      },
-      "LoginizationResponse": {
-        "type": "object",
-        "required": [
-          "_id",
-          "email",
-          "password",
-          "username",
-          "avatar",
-          "boards",
-          "token"
-        ],
-        "properties": {
-          "_id": {
-            "type": "string",
-            "description": "User's id",
-            "example": "64d3b91a88e63627a06db81b"
-          },
           "username": {
             "type": "string",
             "description": "User's name",
@@ -406,31 +291,58 @@
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "leandroK@gmail.com"
           },
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "$3b$10$DymDXytsMVK9R8TksfkRn.vzRONdN8feNKZYWKbTCkeIem1ZIT73G"
-          },
-          "avatarURL": {
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegisterResponse": {
+        "type": "object",
+        "required": ["username", "email"],
+        "properties": {
+          "username": {
             "type": "string",
-            "description": "User's avatar",
-            "example": "avatar"
+            "description": "User's name",
+            "example": "Leandro Kaplan"
           },
-          "theme": {
+          "email": {
             "type": "string",
-            "description": "User's theme",
-            "example": "LIGHT"
+            "description": "User's id",
+            "format": "email",
+            "example": "leandroK@gmail.com"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "leandroK@gmail.com"
           },
-          "boards": {
-            "type": "array",
-            "description": "User's boards",
-            "example": "[]"
-          },
-          "token": {
+          "password": {
             "type": "string",
             "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "required": ["token"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's JWTtoken",
+            "format": "JWTtoken",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
           }
         }
@@ -438,12 +350,12 @@
       "LogoutRequest": {
         "type": "object",
         "required": ["token"],
-
         "properties": {
           "token": {
             "type": "string",
             "description": "User's JWTtoken",
-            "format": "JWTtoken"
+            "format": "JWTtoken",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
           }
         }
       },
@@ -464,11 +376,10 @@
         "type": "object",
         "required": [
           "_id",
-          "username",
           "email",
           "password",
+          "username",
           "avatarURL",
-          "theme",
           "boards",
           "token"
         ],
@@ -486,7 +397,8 @@
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "leandroK@gmail.com"
           },
           "password": {
             "type": "string",
@@ -510,136 +422,275 @@
           },
           "token": {
             "type": "string",
-            "description": "User's password",
+            "description": "User's JWTtoken",
+            "format": "JWTtoken",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
           }
         }
       },
-      "AvatarsRequest": {
-        "type": "file",
-        "required": ["token", "avatar"],
-        "tags": [{ "name": "User" }],
-        "items": {
-          "type": "object",
-          "properties": {
-            "token": {
-              "type": "string",
-              "description": "User's token",
-              "format": "token"
-            },
-            "avatar": {
-              "type": "file",
-              "description": "User's avatar"
-            }
-          }
-        }
-      },
-      "AvatarsResponse": {
-        "type": "file",
-        "required": ["token", "avatar"],
-        "items": {
-          "type": "object",
-          "properties": {
-            "token": {
-              "type": "string",
-              "description": "User's token",
-              "format": "token"
-            },
-            "avatar": {
-              "type": "file",
-              "description": "User's avatar"
-            }
-          }
-        }
-      }
-    },
-    "request": {
-      "CurrentRequest": {
+      "CurrentUpdateRequest": {
         "type": "object",
-        "required": ["token"],
-
+        "required": ["username", "email", "password", "theme"],
         "properties": {
-          "token": {
+          "username": {
             "type": "string",
-            "description": "User's JWTtoken",
-            "format": "JWTtoken"
-          }
-        }
-      },
-      "UpdateDataRequest": {
-        "type": "object",
-        "required": ["token"],
-        "tags": [{ "name": "User" }],
-        "properties": {
+            "description": "User's name",
+            "example": "Ivo Bobul"
+          },
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "IvoBobul@gmail.com"
           },
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "qwerty123"
+            "example": "qwerty777"
           },
-          "username": {
+          "theme": {
             "type": "string",
-            "description": "User's username",
-            "example": "qwerty123"
+            "description": "User's theme",
+            "example": "DARK"
           }
         }
-      }
-    },
-    "responses": {
-      "UpdateDataResponse": {
+      },
+      "CurrentUpdateResponse": {
         "type": "object",
         "required": [
+          "_id",
+          "username",
           "email",
           "password",
-          "username",
-          "avatar",
+          "avatarURL",
+          "theme",
           "boards",
           "token"
         ],
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "64d3b91a88e63627a06db81b"
+          },
+          "username": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Ivo Bobul"
+          },
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "IvoBobul@gmail.com"
           },
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "qwerty123"
+            "example": "$2b$10$EB3lGV1v.vBmnAxYEPuzg.7ZxWnB/CwChhJGHUyB/I1n0UaQeMWia"
           },
-          "username": {
+          "avatarURL": {
             "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
+            "description": "User's avatar",
+            "example": "avatar"
           },
-          "avatar": {
+          "theme": {
             "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
+            "description": "User's theme",
+            "example": "DARK"
           },
           "boards": {
-            "type": "object",
-            "description": "User's password",
-            "example": "qwerty123"
+            "type": "array",
+            "description": "User's boards",
+            "example": "[]"
           },
           "token": {
             "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
+            "description": "User's JWTtoken",
+            "format": "JWTtoken",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
           }
         }
-      }
-    },
-
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      },
+      "AvatarUpdateRequest": {
+        "type": "object",
+        "required": ["avatarURL"],
+        "properties": {
+          "avatarURL": {
+            "type": "file",
+            "description": "User's avatar"
+          }
+        }
+      },
+      "AvatarUpdateResponse": {
+        "type": "object",
+        "required": [
+          "_id",
+          "username",
+          "email",
+          "password",
+          "avatarURL",
+          "theme",
+          "boards",
+          "token"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "64d3b91a88e63627a06db81b"
+          },
+          "username": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Ivo Bobul"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "IvoBobul@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "$2b$10$EB3lGV1v.vBmnAxYEPuzg.7ZxWnB/CwChhJGHUyB/I1n0UaQeMWia"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "avatar"
+          },
+          "theme": {
+            "type": "string",
+            "description": "User's theme",
+            "example": "DARK"
+          },
+          "boards": {
+            "type": "array",
+            "description": "User's boards",
+            "example": "[]"
+          },
+          "token": {
+            "type": "string",
+            "description": "User's JWTtoken",
+            "format": "JWTtoken",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
+          }
+        }
+      },
+      "HelperRequest": {
+        "type": "object",
+        "required": ["email", "comment"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "leandroK@gmail.com"
+          },
+          "comment": {
+            "type": "string",
+            "description": "User's helper request comment",
+            "example": "qwerty qwerty qwerty qwerty qwerty qwerty"
+          }
+        }
+      },
+      "errorBadRequesResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "Error status code",
+            "example": "400"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "Bad request"
+          }
+        }
+      },
+      "errorConflictResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "Error status code",
+            "example": "409"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "User with email - user@example.com, already exist"
+          }
+        }
+      },
+      "errorUnauthorizedResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "Error status code",
+            "example": "401"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "Not authorized"
+          }
+        }
+      },
+      "errorNotFoundResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "Error status code",
+            "example": "404"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "Not found"
+          }
+        }
+      },
+      "errorAddCategoryResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "Error status code",
+            "example": "409"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "The category you are trying to add already exists"
+          }
+        }
+      },
+      "errorRemoveCategoryResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "Error status code",
+            "example": "409"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "The category you are trying to delete is not exist"
+          }
+        }
       }
     }
   }

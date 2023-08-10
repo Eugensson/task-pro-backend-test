@@ -18,7 +18,7 @@ const sendHelpRequest = async (req, res) => {
 
     await transport.sendMail(mailOptions);
 
-    res.status(200).json({ message: 'Help request sent successfully' });
+    res.status(200).json({ message: 'Help request send successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to send help request' });
