@@ -120,15 +120,8 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LogoutResponse"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad request (invalid request body)",
@@ -329,6 +322,11 @@
         "type": "object",
         "required": ["username", "email", "password"],
         "properties": {
+          "username": {
+            "type": "string",
+            "description": "User's username",
+            "example": "qwerty123"
+          },
           "email": {
             "type": "string",
             "description": "User's email",
@@ -338,18 +336,23 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },
-          "username": {
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
             "type": "string",
-            "description": "User's username",
-            "example": "qwerty123"
+            "description": "User's id",
+            "format": "email"
           }
         }
       },
       "LoginizationRequest": {
         "type": "object",
         "required": ["email", "password"],
-
         "properties": {
           "email": {
             "type": "string",
@@ -363,19 +366,28 @@
           }
         }
       },
-      "CurrentResponse": {
+      "LoginizationResponse": {
         "type": "object",
         "required": [
-          "username",
           "_id",
           "email",
           "password",
-          "avatarURL",
-          "theme",
+          "username",
+          "avatar",
           "boards",
           "token"
         ],
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "64d3b91a88e63627a06db81b"
+          },
+          "username": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Leandro Kaplan"
+          },
           "email": {
             "type": "string",
             "description": "User's email",
@@ -384,27 +396,27 @@
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "qwerty123"
+            "example": "$3b$10$DymDXytsMVK9R8TksfkRn.vzRONdN8feNKZYWKbTCkeIem1ZIT73G"
           },
-          "username": {
+          "avatarURL": {
             "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
+            "description": "User's avatar",
+            "example": "avatar"
           },
-          "avatar": {
+          "theme": {
             "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
+            "description": "User's theme",
+            "example": "LIGHT"
           },
           "boards": {
-            "type": "object",
-            "description": "User's password",
-            "example": "qwerty123"
+            "type": "array",
+            "description": "User's boards",
+            "example": "[]"
           },
           "token": {
             "type": "string",
             "description": "User's password",
-            "example": "qwerty123"
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
           }
         }
       },
@@ -417,6 +429,56 @@
             "type": "string",
             "description": "User's JWTtoken",
             "format": "JWTtoken"
+          }
+        }
+      },
+      "CurrentResponse": {
+        "type": "object",
+        "required": [
+          "_id",
+          "username",
+          "email",
+          "password",
+          "avatarURL",
+          "theme",
+          "boards",
+          "token"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Leandro Kaplan"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "$3b$10$DymDXytsMVK9R8TksfkRn.vzRONdN8feNKZYWKbTCkeIem1ZIT73G"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "avatar"
+          },
+          "theme": {
+            "type": "string",
+            "description": "User's theme",
+            "example": "LIGHT"
+          },
+          "boards": {
+            "type": "array",
+            "description": "User's boards",
+            "example": "[]"
+          },
+          "token": {
+            "type": "string",
+            "description": "User's password",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
           }
         }
       },
@@ -474,85 +536,7 @@
           }
         }
       },
-      "RegistrationResponse": {
-        "type": "object",
-        "required": ["_id", "token", "email", "password"],
-        "properties": {
-          "_id": {
-            "type": "string",
-            "description": "User's id",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "username": {
-            "type": "string",
-            "description": "User's username",
-            "example": "qwerty123"
-          },
-          "token": {
-            "type": "string",
-            "description": "User's token"
-          }
-        }
-      },
-      "LoginizationResponse": {
-        "type": "object",
-        "required": [
-          "email",
-          "password",
-          "username",
-          "avatar",
-          "boards",
-          "token"
-        ],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "username": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "avatar": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "boards": {
-            "type": "object",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "token": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          }
-        }
-      },
-      "LogoutResponse": {
-        "type": "object",
-        "required": ["message"],
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "Successful operation",
-            "format": "JWTtoken"
-          }
-        }
-      },
+
       "ThemeResponse": {
         "type": "object",
         "required": ["theme"],
