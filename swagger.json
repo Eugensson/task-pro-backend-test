@@ -312,20 +312,64 @@
       "get": {
         "tags": ["Boards"],
         "summary": "Get all boards for current user",
-        "security": [{ "Bearer": [] }],
+        "security": [{"Bearer": []}],
         "responses": {
-          "200": { "description": "Boards found" },
-          "401": { "description": "Missing header with authorization token" }
+          "200": {
+            "description": "Boards found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BoardResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token"
+          }
         }
       },
       "post": {
         "tags": ["Boards"],
         "summary": "Add a new board for current user",
-        "security": [{ "Bearer": [] }],
+        "security": [{"Bearer": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoardRequest"
+              }
+            }
+          }
+        },
         "responses": {
-          "201": { "description": "The board was successfully created" },
-          "400": { "description": "Error creating board" },
-          "401": { "description": "Missing header with authorization token" }
+          "201": {
+            "description": "The board was successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BoardResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error creating board",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token"
+          }
         }
       }
     },
@@ -333,7 +377,7 @@
       "patch": {
         "tags": ["Boards"],
         "summary": "Edit a board for current user",
-        "security": [{ "Bearer": [] }],
+        "security": [{"Bearer": []}],
         "responses": {
           "200": { "description": "The board was successfully updated" },
           "400": { "description": "Board update failed" },
@@ -343,7 +387,7 @@
       "delete": {
         "tags": ["Boards"],
         "summary": "Delete a board for current user",
-        "security": [{ "Bearer": [] }],
+        "security": [{"Bearer": []}],
         "responses": {
           "200": { "description": "The board was successfully deleted" },
           "401": { "description": "Missing header with authorization token" },
@@ -713,13 +757,11 @@
           }
         }
       },
-      "ErrorBadRequesResponse": {
+      "ErrorBadRequestResponse": {
         "type": "object",
-        "required": ["message"],
         "properties": {
           "message": {
             "type": "string",
-            "description": "Error message",
             "example": "Bad request"
           }
         }
@@ -808,6 +850,73 @@
             "type": "string",
             "description": "Error message",
             "example": "Failed to send help request"
+          }
+        }
+      },
+      "BoardRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "My Board"
+          },
+          "icon": {
+            "type": "string",
+            "example": "icon-url"
+          },
+          "background": {
+            "type": "string",
+            "example": "background-url"
+          }
+        },
+        "required": ["title"]
+      },
+      "BoardResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "6123456789abcdef01234567"
+          },
+          "title": {
+            "type": "string",
+            "example": "My Board"
+          },
+          "icon": {
+            "type": "string",
+            "example": "icon-url"
+          },
+          "background": {
+            "type": "string",
+            "example": "background-url"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "To Do"
+                },
+                "cards": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "example": "Task 1"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "Description of Task 1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
