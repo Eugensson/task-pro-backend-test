@@ -57,8 +57,26 @@
               }
             }
           },
-          "400": { "description": "Validation error" },
-          "409": { "description": "User with such email already exists" }
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User with such email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorConflictResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -88,9 +106,36 @@
               }
             }
           },
-          "400": { "description": "Validation error" },
-          "403": { "description": "Provided password is incorrect" },
-          "404": { "description": "User with such email not found" }
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Provided password is incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorProvidePasswordResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User with such email not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorNotFoundResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -111,8 +156,17 @@
           }
         },
         "responses": {
-          "204": { "description": "User signed out" },
-          "401": { "description": "Missing header with authorization token" }
+          "204": { "description": "User logout" },
+          "401": {
+            "description": "Missing header with authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUnauthorizedResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -143,7 +197,16 @@
               }
             }
           },
-          "401": { "description": "Missing header with authorization token" }
+          "401": {
+            "description": "Missing header with authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUnauthorizedResponse"
+                }
+              }
+            }
+          }
         }
       },
       "patch": {
@@ -172,8 +235,26 @@
               }
             }
           },
-          "400": { "description": "Validation error" },
-          "401": { "description": "Missing header with authorization token" }
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUnauthorizedResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -204,8 +285,26 @@
               }
             }
           },
-          "400": { "description": "Validation error" },
-          "401": { "description": "Missing header with authorization token" }
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorUnauthorizedResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -271,8 +370,26 @@
         },
         "responses": {
           "200": { "description": "Help request sent successfully" },
-          "400": { "description": "Validation error" },
-          "500": { "description": "Failed to send help request" }
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to send help request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorServerResponse"
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -596,15 +713,10 @@
           }
         }
       },
-      "errorBadRequesResponse": {
+      "ErrorBadRequesResponse": {
         "type": "object",
-        "required": ["status", "message"],
+        "required": ["message"],
         "properties": {
-          "status": {
-            "type": "integer",
-            "description": "Error status code",
-            "example": "400"
-          },
           "message": {
             "type": "string",
             "description": "Error message",
@@ -612,31 +724,10 @@
           }
         }
       },
-      "errorConflictResponse": {
+      "ErrorUnauthorizedResponse": {
         "type": "object",
-        "required": ["status", "message"],
+        "required": ["message"],
         "properties": {
-          "status": {
-            "type": "integer",
-            "description": "Error status code",
-            "example": "409"
-          },
-          "message": {
-            "type": "string",
-            "description": "Error message",
-            "example": "User with email - user@example.com, already exist"
-          }
-        }
-      },
-      "errorUnauthorizedResponse": {
-        "type": "object",
-        "required": ["status", "message"],
-        "properties": {
-          "status": {
-            "type": "integer",
-            "description": "Error status code",
-            "example": "401"
-          },
           "message": {
             "type": "string",
             "description": "Error message",
@@ -644,15 +735,21 @@
           }
         }
       },
-      "errorNotFoundResponse": {
+      "ErrorProvidePasswordResponse": {
         "type": "object",
-        "required": ["status", "message"],
+        "required": ["message"],
         "properties": {
-          "status": {
-            "type": "integer",
-            "description": "Error status code",
-            "example": "404"
-          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "Provided password is incorrect"
+          }
+        }
+      },
+      "ErrorNotFoundResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
           "message": {
             "type": "string",
             "description": "Error message",
@@ -676,6 +773,17 @@
           }
         }
       },
+      "ErrorConflictResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "User with such email already exists"
+          }
+        }
+      },
       "errorRemoveCategoryResponse": {
         "type": "object",
         "required": ["status", "message"],
@@ -689,6 +797,17 @@
             "type": "string",
             "description": "Error message",
             "example": "The category you are trying to delete is not exist"
+          }
+        }
+      },
+      "ErrorServerResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "Failed to send help request"
           }
         }
       }

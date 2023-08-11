@@ -13,15 +13,9 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+  await User.create({ ...req.body, password: hashPassword });
 
-  res.status(201).json({
-    message: 'New user is Registered',
-    user: {
-      username: newUser.username,
-      email: newUser.email,
-    },
-  });
+  res.status(201).json({ message: 'New user is registered' });
 };
 
 module.exports = { register: ctrlWrapper(register) };

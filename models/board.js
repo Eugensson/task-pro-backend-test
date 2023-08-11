@@ -48,12 +48,12 @@ const boardSchema = new Schema(
     boardsData: {
       tasks: {
         type: Object,
-        required: true,
+        // required: true,
         default: {},
       },
       columns: {
         type: Object,
-        required: true,
+        // required: true,
         default: {},
       },
       columnOrder: {

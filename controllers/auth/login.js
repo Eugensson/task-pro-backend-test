@@ -11,7 +11,7 @@ const login = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw HttpError(404, 'User with such email not found');
+    throw HttpError(404, 'Not found');
   }
 
   const passwordCompare = await bcrypt.compare(password, user.password);
@@ -28,9 +28,9 @@ const login = async (req, res) => {
   user.token = token;
   await user.save();
 
-  // await User.findByIdAndUpdate(user._id, { token });
+  await User.findByIdAndUpdate(user._id, { token });
 
-  res.json(user);
+  res.json({ token });
 };
 
 module.exports = { login: ctrlWrapper(login) };
