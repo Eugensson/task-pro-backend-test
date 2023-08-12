@@ -62,7 +62,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                  "$ref": "#/components/schemas/ErrorBadRequestResponse"
                 }
               }
             }
@@ -111,7 +111,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                  "$ref": "#/components/schemas/ErrorBadRequestResponse"
                 }
               }
             }
@@ -240,7 +240,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                  "$ref": "#/components/schemas/ErrorBadRequestResponse"
                 }
               }
             }
@@ -290,7 +290,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                  "$ref": "#/components/schemas/ErrorBadRequestResponse"
                 }
               }
             }
@@ -312,7 +312,7 @@
       "get": {
         "tags": ["Boards"],
         "summary": "Get all boards for current user",
-        "security": [{"Bearer": []}],
+        "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
             "description": "Boards found",
@@ -335,7 +335,7 @@
       "post": {
         "tags": ["Boards"],
         "summary": "Add a new board for current user",
-        "security": [{"Bearer": []}],
+        "security": [{ "Bearer": [] }],
         "requestBody": {
           "required": true,
           "content": {
@@ -377,7 +377,7 @@
       "patch": {
         "tags": ["Boards"],
         "summary": "Edit a board for current user",
-        "security": [{"Bearer": []}],
+        "security": [{ "Bearer": [] }],
         "responses": {
           "200": { "description": "The board was successfully updated" },
           "400": { "description": "Board update failed" },
@@ -387,7 +387,7 @@
       "delete": {
         "tags": ["Boards"],
         "summary": "Delete a board for current user",
-        "security": [{"Bearer": []}],
+        "security": [{ "Bearer": [] }],
         "responses": {
           "200": { "description": "The board was successfully deleted" },
           "401": { "description": "Missing header with authorization token" },
@@ -419,7 +419,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorBadRequesResponse"
+                  "$ref": "#/components/schemas/ErrorBadRequestResponse"
                 }
               }
             }
