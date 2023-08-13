@@ -144,17 +144,17 @@
         "tags": ["Auth"],
         "summary": "User logout",
         "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
-              }
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "204": { "description": "User logout" },
           "401": {
@@ -175,17 +175,17 @@
         "tags": ["Users"],
         "summary": "Get current user's data",
         "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CurrentRequest"
-              }
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Logged user returned",
@@ -213,6 +213,17 @@
         "tags": ["Users"],
         "summary": "Edit current user's profile",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "",
           "required": true,
@@ -263,6 +274,17 @@
         "tags": ["Users"],
         "summary": "Edit current user's avatar",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "",
           "required": true,
@@ -313,6 +335,17 @@
         "tags": ["Boards"],
         "summary": "Get all boards for current user",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Boards found",
@@ -336,6 +369,17 @@
         "tags": ["Boards"],
         "summary": "Add a new board for current user",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -378,6 +422,17 @@
         "tags": ["Boards"],
         "summary": "Edit a board for current user",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": { "description": "The board was successfully updated" },
           "400": { "description": "Board update failed" },
@@ -388,6 +443,17 @@
         "tags": ["Boards"],
         "summary": "Delete a board for current user",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": { "description": "The board was successfully deleted" },
           "401": { "description": "Missing header with authorization token" },
@@ -401,6 +467,17 @@
         "tags": ["Helper"],
         "summary": "Send a help request",
         "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "",
           "required": true,
@@ -440,6 +517,11 @@
   },
   "components": {
     "schemas": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      },
       "RegisterRequest": {
         "type": "object",
         "required": ["username", "email", "password"],
@@ -499,31 +581,6 @@
       "LoginResponse": {
         "type": "object",
         "required": ["token"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User's JWTtoken",
-            "format": "JWTtoken",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
-          }
-        }
-      },
-      "LogoutRequest": {
-        "type": "object",
-        "required": ["token"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User's JWTtoken",
-            "format": "JWTtoken",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNiOTFhNzJlNjM2MjdhMDZkYjgxYiIsImlhdCI8MTY5MTY2MzgyNywiZXhwIjoxNjkxNzQ2NjI8fQ.9BIlfDFwOIhcwddT1GLDd-Ri08H7JVWPGFDVVAicLOw"
-          }
-        }
-      },
-      "CurrentRequest": {
-        "type": "object",
-        "required": ["token"],
-
         "properties": {
           "token": {
             "type": "string",
