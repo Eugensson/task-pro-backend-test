@@ -9,8 +9,7 @@ const deleteById = async (req, res) => {
   if (!board) {
     throw new HttpError(404, 'Not found');
   }
-
-  if (board.columnOrder.length === 0) {
+  if (board.boardsData.columnOrder.length === 0) {
     const result = await Board.findByIdAndDelete(boardId);
 
     if (!result) {
