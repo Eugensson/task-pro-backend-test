@@ -29,6 +29,11 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
 });
 
+app.use((req, res, next) => {
+  res.setHeader('Permissions-Policy', 'interest-cohort=()');
+  next();
+});
+
 app.use((err, req, res, next) => {
   const { status = 500, message = 'err.message' } = err;
 
