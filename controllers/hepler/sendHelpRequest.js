@@ -11,7 +11,7 @@ const sendHelpRequest = async (req, res) => {
   try {
     const mailOptions = {
       from: 'eco2023@meta.ua',
-      to: 'olgalovealex@meta.ua',
+      to: 'taskpro.project@gmail.com',
       subject: 'Help Request',
       text: `Email: ${email}\nComment: ${comment}`,
     };
