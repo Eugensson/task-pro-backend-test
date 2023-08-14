@@ -1,10 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 const { handleMongooseError } = require('../helpers');
-const emailRegexp =
-  /^(?=.*[@.])[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*$/;
-// const passRegex =
-//   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,64}$/;
 
 const userSchema = new Schema(
   {
@@ -14,13 +10,13 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      match: emailRegexp,
+
       required: [true, 'Email is required'],
       unique: true,
     },
     password: {
       type: String,
-      // match: passRegex,
+
       required: [true, 'Set password for user'],
     },
     avatarURL: { type: String, default: '' },
