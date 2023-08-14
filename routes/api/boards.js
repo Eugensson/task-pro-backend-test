@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ctrl = require('../../controllers/boards');
 const { validateBody, isValidId, authenticate } = require('../../middlewares');
-const { addBoardSchema, updateBoardSchema } = require('../../schemas');
+const { addBoardSchema } = require('../../schemas');
 
 router.get('/', authenticate, ctrl.getAll);
 
@@ -12,7 +12,7 @@ router.patch(
   '/:boardId',
   isValidId,
   authenticate,
-  validateBody(updateBoardSchema),
+  // validateBody(updateBoardSchema),
   ctrl.updateById
 );
 
